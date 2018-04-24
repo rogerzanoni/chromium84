@@ -21,6 +21,7 @@
 #include <wayland-client.h>
 
 #include "ozone/wayland/display.h"
+#include "ui/ozone/platform/wayland/host/wayland_output.h"
 #include "url/third_party/mozilla/url_parse.h"
 
 namespace ozonewayland {
@@ -59,6 +60,7 @@ WaylandScreen::WaylandScreen(wl_registry* registry, uint32_t id)
 #if defined(OS_WEBOS)
     WaylandScreen::OutputDone,
 #endif
+    WaylandScreen::OutputHandleScale,
   };
 
   output_ =
@@ -184,5 +186,11 @@ void WaylandScreen::OutputDone(void* data, struct wl_output* wl_output) {
   }
 }
 #endif
+
+// static
+void WaylandScreen::OutputHandleScale(void*,
+                                      struct wl_output*) {
+  NOTIMPLEMENTED();
+}
 
 }  // namespace ozonewayland

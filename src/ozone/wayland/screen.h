@@ -77,6 +77,9 @@ class WaylandScreen {
   static void OutputDone(void* data, struct wl_output* wl_output);
 #endif
 
+  static void OutputHandleScale(void* data,
+                                struct wl_output* wl_output);
+
   // The Wayland output this object wraps
   wl_output* output_;
 
@@ -93,6 +96,9 @@ class WaylandScreen {
   std::string display_name_;
   gfx::Rect rect_;
   base::Optional<int32_t> transform_;
+
+  int32_t scale_factor_;
+  int32_t pending_scale_factor_;
 
   DISALLOW_COPY_AND_ASSIGN(WaylandScreen);
 };
