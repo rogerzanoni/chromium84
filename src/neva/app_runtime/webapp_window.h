@@ -87,6 +87,7 @@ class WebAppWindow : public views::NativeEventDelegate,
                        int hotspot_x,
                        int hotspot_y);
   void SetWindowProperty(const std::string& name, const std::string& value);
+  void SetWindowSurfaceId(int surface_id);
   void SetLocationHint(gfx::LocationHint value);
   void Show();
   void Hide();
@@ -191,6 +192,7 @@ class WebAppWindow : public views::NativeEventDelegate,
   bool pending_show_ = false;
   bool pending_activate_ = false;
   bool contents_swapped_ = false;
+  int window_surface_id_;
   bool deferred_deleting_ = false;
   bool widget_closed_ = false;
   base::OneShotTimer viewport_timer_;

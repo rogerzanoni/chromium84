@@ -61,6 +61,7 @@ class AURA_EXPORT WindowTreeHostPlatform : public WindowTreeHost,
   void SetInputRegion(const std::vector<gfx::Rect>& region) override;
   void SetWindowProperty(const std::string& name,
                          const std::string& value) override;
+  void SetWindowSurfaceId(int surface_id) override;
   void ToggleFullscreen() override;
   void CreateGroup(const ui::WindowGroupConfiguration& config) override;
   void AttachToGroup(const std::string& group_name,
