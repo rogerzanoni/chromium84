@@ -62,7 +62,7 @@ class WebAppWindow : public views::NativeEventDelegate,
     content::WebContents* web_contents = nullptr;
     gfx::LocationHint location_hint = gfx::LocationHint::kUnknown;
   };
-  WebAppWindow(const CreateParams& params, WebAppWindowDelegate* delegate);
+  WebAppWindow(const CreateParams& params, WebAppWindowDelegate* delegate, int surface_id);
   ~WebAppWindow() override;
 
   bool HandleEvent(AppRuntimeEvent* app_runtime_event);
