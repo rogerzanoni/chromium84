@@ -91,10 +91,10 @@ ui::PlatformWindowType GetPlatformWindowType(
     case Widget::InitParams::TYPE_BUBBLE:
       return ui::PlatformWindowType::kBubble;
     default:
-      return ui::PlatformWindowType::kPopup;
+      return ui::PlatformWindowType::kWindow;
   }
   NOTREACHED();
-  return ui::PlatformWindowType::kPopup;
+  return ui::PlatformWindowType::kWindow;
 }
 
 ui::PlatformWindowInitProperties ConvertWidgetInitParamsToInitProperties(
