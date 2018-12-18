@@ -95,6 +95,9 @@ struct COMPONENT_EXPORT(PLATFORM_WINDOW) PlatformWindowInitProperties {
   std::string wm_class_class;
 
   X11ExtensionDelegate* x11_extension_delegate = nullptr;
+
+  // Surface id, which is used when ivi shell is used.
+  int surface_id = 0;
 #endif
 };
 

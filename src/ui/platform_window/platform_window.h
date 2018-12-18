@@ -63,6 +63,8 @@ class COMPONENT_EXPORT(PLATFORM_WINDOW) PlatformWindow
 
   virtual void SetTitle(const base::string16& title) = 0;
 
+  virtual void SetSurfaceId(int surface_id) = 0;
+
   virtual void SetCapture() = 0;
   virtual void ReleaseCapture() = 0;
   virtual bool HasCapture() const = 0;
