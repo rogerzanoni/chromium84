@@ -10,6 +10,7 @@
 #include <vector>
 
 #include <ivi-application-client-protocol.h>
+#include <agl-shell-client-protocol.h>
 
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/native_widget_types.h"
@@ -242,6 +243,7 @@ class WaylandConnection {
 #endif  // !defined(USE_NEVA_APPRUNTIME)
   wl::Object<xdg_wm_base> shell_;
   wl::Object<zxdg_shell_v6> shell_v6_;
+  wl::Object<agl_shell> agl_shell_;
   // TODO(msisov): use wl::Object.
   ivi_application* ivi_application_ = nullptr;
   wl::Object<wp_presentation> presentation_;

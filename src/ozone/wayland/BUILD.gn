@@ -51,6 +51,7 @@ source_set("wayland") {
 
   deps = [
     "//skia",
+    "//third_party/agl-shell:agl_shell_protocol",
     "//ui/gfx",
     "//ui/gfx/geometry",
     "//ui/gl",
