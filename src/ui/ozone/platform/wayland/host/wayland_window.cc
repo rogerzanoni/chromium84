@@ -143,6 +143,12 @@ gfx::Rect WaylandWindow::GetBounds() {
 
 void WaylandWindow::SetTitle(const base::string16& title) {}
 
+void WaylandWindow::SetAppId(const base::string16& title) {
+  DCHECK(shell_surface_);
+  shell_surface_->SetAppId(title);
+  connection_->ScheduleFlush();
+}
+
 void WaylandWindow::SetCapture() {
   // Wayland doesn't allow explicit grabs. Instead, it sends events to "entered"
   // windows. That is, if user enters their mouse pointer to a window, that
