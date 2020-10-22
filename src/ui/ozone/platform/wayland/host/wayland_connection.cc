@@ -359,6 +359,9 @@ void WaylandConnection::Global(void* data,
     }
     xdg_wm_base_add_listener(connection->shell_.get(), &shell_listener,
                              connection);
+  } else if (!connection->ivi_application_ && strcmp(interface, "ivi_application") == 0){
+    connection->ivi_application_ = static_cast<ivi_application*>(
+                 wl_registry_bind(registry, name, &ivi_application_interface, 1));
   } else if (base::EqualsCaseInsensitiveASCII(interface, "wl_output")) {
     if (version < kMinWlOutputVersion) {
       LOG(ERROR)

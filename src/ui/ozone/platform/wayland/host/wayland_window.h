@@ -89,6 +89,8 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   int32_t buffer_scale() const { return buffer_scale_; }
   int32_t ui_scale() const { return ui_scale_; }
 
+  int surface_id() const { return surface_id_; }
+
   const base::flat_set<uint32_t>& entered_outputs_ids() const {
     return entered_outputs_ids_;
   }
@@ -294,6 +296,8 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   // been hidden at least once.  To determine which output the popup belongs to,
   // we ask its parent.
   base::flat_set<uint32_t> entered_outputs_ids_;
+
+  int surface_id_ = 0;
 
   // The type of the current WaylandWindow object.
   ui::PlatformWindowType type_ = ui::PlatformWindowType::kWindow;

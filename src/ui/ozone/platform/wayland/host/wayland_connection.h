@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+#include <ivi-application-client-protocol.h>
+
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/ozone/platform/wayland/common/wayland_object.h"
@@ -63,6 +65,7 @@ class WaylandConnection {
   wl_subcompositor* subcompositor() const { return subcompositor_.get(); }
   xdg_wm_base* shell() const { return shell_.get(); }
   zxdg_shell_v6* shell_v6() const { return shell_v6_.get(); }
+  ivi_application* ivi_shell() const { return ivi_application_; }
 #if !defined(USE_NEVA_APPRUNTIME)
   wl_seat* seat() const { return seat_.get(); }
 #endif  // !defined(USE_NEVA_APPRUNTIME)
@@ -239,6 +242,8 @@ class WaylandConnection {
 #endif  // !defined(USE_NEVA_APPRUNTIME)
   wl::Object<xdg_wm_base> shell_;
   wl::Object<zxdg_shell_v6> shell_v6_;
+  // TODO(msisov): use wl::Object.
+  ivi_application* ivi_application_ = nullptr;
   wl::Object<wp_presentation> presentation_;
   wl::Object<zwp_text_input_manager_v1> text_input_manager_v1_;
 

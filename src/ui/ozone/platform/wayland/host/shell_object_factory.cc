@@ -31,6 +31,10 @@ ShellObjectFactory::CreateShellSurfaceWrapper(WaylandConnection* connection,
   }
   ///@}
 
+
+  if (connection->ivi_shell())
+    return std::make_unique<IviSurfaceWrapper>(wayland_window);
+
   if (connection->shell() || connection->shell_v6()) {
     auto surface =
         std::make_unique<XDGSurfaceWrapperImpl>(wayland_window, connection);
@@ -66,6 +70,9 @@ std::unique_ptr<ShellPopupWrapper> ShellObjectFactory::CreateShellPopupWrapper(
         std::make_unique<XDGSurfaceWrapperImpl>(wayland_window, connection);
     if (!surface->Initialize(false /* with_top_level */))
       return nullptr;
+
+    CHECK(!connection->ivi_shell()) <<
+      "There must be no popup windows created when ivi shell is used";
 
     auto popup = std::make_unique<XDGPopupWrapperImpl>(std::move(surface),
                                                        wayland_window);
