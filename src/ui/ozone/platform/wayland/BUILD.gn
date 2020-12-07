@@ -344,15 +344,7 @@ source_set("test_support") {
 source_set("wayland_unittests") {
   testonly = true
 
-  #@name USE_NEVA_APPRUNTIME
-  #@{
-  if (!is_webos) {
-  assert(use_wayland_gbm)
-  }
-  #@}
-
   sources = [
-    "gpu/wayland_surface_factory_unittest.cc",
     "host/wayland_connection_unittest.cc",
     "host/wayland_data_device_unittest.cc",
     "host/wayland_event_source_unittest.cc",
@@ -365,13 +357,11 @@ source_set("wayland_unittests") {
     "host/wayland_window_unittest.cc",
     "test/wayland_test.cc",
     "test/wayland_test.h",
-    "wayland_buffer_manager_unittest.cc",
   ]
 
   deps = [
     ":test_support",
     ":wayland",
-    "//build/config/linux/libdrm",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/wayland:wayland_server",
@@ -382,8 +372,6 @@ source_set("wayland_unittests") {
     "//ui/base:buildflags",
     "//ui/base/ime/linux",
     "//ui/events/ozone/layout",
-    "//ui/gfx/linux:drm",
-    "//ui/gfx/linux:gbm",
     "//ui/gfx/linux:test_support",
     "//ui/ozone:platform",
     "//ui/ozone:test_support",
@@ -395,10 +383,20 @@ source_set("wayland_unittests") {
     deps += [ "//ui/events/keycodes:xkb" ]
   }
 
-  defines = [
-    "WL_HIDE_DEPRECATED",
-    "WAYLAND_GBM",
-  ]
+  defines = [ "WL_HIDE_DEPRECATED" ]
+
+  if (use_wayland_gbm) {
+    sources += [
+      "gpu/wayland_surface_factory_unittest.cc",
+      "wayland_buffer_manager_unittest.cc",
+    ]
+    deps += [
+      "//build/config/linux/libdrm",
+      "//ui/gfx/linux:drm",
+      "//ui/gfx/linux:gbm",
+    ]
+    defines += [ "WAYLAND_GBM" ]
+  }
 }
 
 fuzzer_test("wayland_buffer_fuzzer") {
