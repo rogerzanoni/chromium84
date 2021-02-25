@@ -32,7 +32,7 @@ PlatformFactory::CreateMemoryManagerDelegate() {
 
 std::unique_ptr<SystemServiceBridgeDelegate>
 PlatformFactory::CreateSystemServiceBridgeDelegate(
-  std::string, std::string, SystemServiceBridgeDelegate::Response) {
+  std::string, SystemServiceBridgeDelegate::Response) {
   return std::unique_ptr<SystemServiceBridgeDelegate>();
 }
 
