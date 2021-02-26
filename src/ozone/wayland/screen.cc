@@ -26,7 +26,7 @@
 
 namespace ozonewayland {
 namespace {
-#if defined(OS_WEBOS)
+#if defined(OS_WEBOS) || defined(USE_NEVA_APPRUNTIME)
 const char kDisplayIdQueryKey[] = "display_id";
 const char kDisplayNameQueryKey[] = "name";
 
