@@ -758,7 +758,7 @@ group("gn_all") {
         "//neva/wam_demo",
         "//neva/neva_unittests",
       ]
-      if (is_webos) {
+      if (is_webos || is_agl) {
         deps += [
           "//webos:weboswebruntime",
           "//webos/install",

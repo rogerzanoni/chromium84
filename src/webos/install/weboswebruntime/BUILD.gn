@@ -167,7 +167,7 @@ copy("locales") {
 copy("headers") {
   sources = headers
 
-  outputs = [ "$image_path/$includedir/webruntime/{{source_root_relative_dir}}/{{source_file_part}}" ]
+  outputs = [ "$image_path/$includedir/chromium84/{{source_root_relative_dir}}/{{source_file_part}}" ]
 }
 
 copy("generated_headers") {
@@ -175,7 +175,7 @@ copy("generated_headers") {
   outputs = []
 
   foreach(file, rebase_path(sources, root_gen_dir)) {
-    outputs += [ "$image_path/$includedir/webruntime/" + file ]
+    outputs += [ "$image_path/$includedir/chromium84/" + file ]
   }
   deps = generated_headers_deps
 }
