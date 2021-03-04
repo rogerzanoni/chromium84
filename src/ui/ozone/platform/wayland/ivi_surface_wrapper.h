@@ -21,9 +21,7 @@ class IviSurfaceWrapper : public ShellSurfaceWrapper {
   IviSurfaceWrapper(WaylandWindow* wayland_window);
   ~IviSurfaceWrapper() override;
 
-  bool Initialize(WaylandConnection* connection,
-                  wl_surface* surface,
-                  bool with_toplevel) override;
+  bool Initialize(bool with_toplevel) override;
   void SetMaximized() override;
   void UnSetMaximized() override;
   void SetFullscreen() override;
@@ -32,12 +30,14 @@ class IviSurfaceWrapper : public ShellSurfaceWrapper {
   void SurfaceMove(WaylandConnection* connection) override;
   void SurfaceResize(WaylandConnection* connection, uint32_t hittest) override;
   void SetTitle(const base::string16& title) override;
-  void SetAppId(const base::string16& title) override;
+  void SetAppId(const std::string& app_id) override;
   void AckConfigure() override;
   void SetWindowGeometry(const gfx::Rect& bounds) override;
   void SetInputRegion(const std::vector<gfx::Rect>& region) override;
   void SetWindowProperty(const std::string& name,
 			 const std::string& value) override;
+  void SetMinSize(int32_t width, int32_t height) override;
+  void SetMaxSize(int32_t width, int32_t height) override;
  private:
   // ivi_surface_listener
   static void HandleConfigure(void* data,

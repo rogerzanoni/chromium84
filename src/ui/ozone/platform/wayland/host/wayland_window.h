@@ -95,6 +95,8 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
     return entered_outputs_ids_;
   }
 
+  WaylandConnection* connection() { return connection_; }
+
   // Returns current type of the window.
   PlatformWindowType type() const { return type_; }
 
@@ -205,7 +207,6 @@ class WaylandWindow : public PlatformWindow, public PlatformEventDispatcher {
   WaylandWindow(PlatformWindowDelegate* delegate,
                 WaylandConnection* connection);
 
-  WaylandConnection* connection() { return connection_; }
   PlatformWindowDelegate* delegate() { return delegate_; }
 
   // Sets bounds in dip.

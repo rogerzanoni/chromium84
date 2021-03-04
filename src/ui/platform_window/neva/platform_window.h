@@ -103,6 +103,14 @@ class PlatformWindow {
   virtual void FocusGroupLayer() {}
   virtual void DetachGroup() {}
   virtual std::string GetDisplayId() { return "-1"; }
+  virtual void SetAppId(const base::string16& title) {}
+  virtual void SetAglBackground(void) {}
+  virtual void SetAglReady(void) {}
+  virtual void SetAglPanel(int edge) {}
+  virtual void SetAglActivateApp(std::string app) {}
+  virtual void HideInputPanel() {}
+  virtual void SetInputContentType(TextInputType text_input_type,
+                                   int text_input_flags) {}
 };
 
 }  // namespace neva

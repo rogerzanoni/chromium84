@@ -7,6 +7,7 @@
 #include "ui/ozone/platform/wayland/host/wayland_connection.h"
 #include "ui/ozone/platform/wayland/host/xdg_popup_wrapper_impl.h"
 #include "ui/ozone/platform/wayland/host/xdg_surface_wrapper_impl.h"
+#include "ui/ozone/platform/wayland/ivi_surface_wrapper.h"
 
 ///@name USE_NEVA_APPRUNTIME
 ///@{

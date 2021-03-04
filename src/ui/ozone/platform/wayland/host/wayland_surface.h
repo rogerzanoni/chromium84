@@ -43,6 +43,7 @@ class WaylandSurface : public WaylandWindow,
   void Show(bool inactive) override;
   void Hide() override;
   bool IsVisible() const override;
+  void SetAppId(const base::string16& app_id) override;
   void SetTitle(const base::string16& title) override;
   void ToggleFullscreen() override;
   void Maximize() override;

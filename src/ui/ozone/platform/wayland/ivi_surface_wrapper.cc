@@ -6,9 +6,9 @@
 
 #include <ivi-application-client-protocol.h>
 
-#include "ui/ozone/platform/wayland/wayland_connection.h"
-#include "ui/ozone/platform/wayland/wayland_util.h"
-#include "ui/ozone/platform/wayland/wayland_window.h"
+#include "ui/ozone/platform/wayland/host/wayland_connection.h"
+#include "ui/ozone/platform/wayland/host/wayland_window.h"
+#include "ui/ozone/platform/wayland/common/wayland_util.h"
 
 namespace ui {
 
@@ -19,9 +19,7 @@ IviSurfaceWrapper::~IviSurfaceWrapper() {
   ivi_surface_destroy(ivi_surface_);
 }
 
-bool IviSurfaceWrapper::Initialize(WaylandConnection* connection,
-                                     wl_surface* surface,
-                                     bool with_toplevel) {
+bool IviSurfaceWrapper::Initialize(bool with_toplevel) {
   static const struct ivi_surface_listener ivi_surface_listener = {
     &IviSurfaceWrapper::HandleConfigure,
   };
@@ -34,8 +32,8 @@ bool IviSurfaceWrapper::Initialize(WaylandConnection* connection,
     surface_id = static_cast<int>(getpid());
   }
 
-  ivi_surface_ = ivi_application_surface_create(connection->ivi_shell(),
-                                                surface_id, surface);
+  ivi_surface_ = ivi_application_surface_create(wayland_window_->connection()->ivi_shell(),
+                                                surface_id, wayland_window_->surface());
   DCHECK(ivi_surface_);
   ivi_surface_add_listener(ivi_surface_, &ivi_surface_listener, this);
   return true;
@@ -74,7 +72,15 @@ void IviSurfaceWrapper::SetTitle(const base::string16& title) {
   NOTIMPLEMENTED_LOG_ONCE();
 }
 
-void IviSurfaceWrapper::SetAppId(const base::string16& title) {
+void IviSurfaceWrapper::SetAppId(const std::string& app_id) {
+  NOTIMPLEMENTED_LOG_ONCE();
+}
+
+void IviSurfaceWrapper::SetMinSize(int32_t width, int32_t height) {
+  NOTIMPLEMENTED_LOG_ONCE();
+}
+
+void IviSurfaceWrapper::SetMaxSize(int32_t width, int32_t height) {
   NOTIMPLEMENTED_LOG_ONCE();
 }
 

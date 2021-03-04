@@ -4,6 +4,7 @@
 
 #include "ui/ozone/platform/wayland/host/wayland_surface.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "ui/base/dragdrop/drag_drop_types.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "ui/base/hit_test.h"
@@ -49,6 +50,12 @@ bool WaylandSurface::CreateShellSurface() {
   SetSizeConstraints();
   TriggerStateChanges();
   return true;
+}
+
+void WaylandSurface::SetAppId(const base::string16& app_id) {
+  DCHECK(shell_surface_);
+  shell_surface_->SetAppId(base::UTF16ToUTF8(app_id));
+  connection()->ScheduleFlush();
 }
 
 void WaylandSurface::ApplyPendingBounds() {
