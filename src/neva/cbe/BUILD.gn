@@ -40,7 +40,6 @@ if (use_cbe) {
       ]
 
       deps += [
-        "//build/config:exe_and_shlib_deps",
         # On Linux, link the dependencies (libraries) that make up actual
         # Chromium functionality directly into the executable.
         "//chrome:browser_dependencies",
