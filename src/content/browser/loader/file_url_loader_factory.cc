@@ -961,9 +961,9 @@ void CreateFileURLLoaderBypassingSecurityChecks(
 }
 
 std::unique_ptr<network::mojom::URLLoaderFactory> CreateFileURLLoaderFactory(
-    uint32_t process_id,
     const base::FilePath& profile_path,
-    scoped_refptr<SharedCorsOriginAccessList> shared_cors_origin_access_list) {
+    scoped_refptr<SharedCorsOriginAccessList> shared_cors_origin_access_list,
+    uint32_t process_id) {
   // TODO(crbug.com/924416): Re-evaluate TaskPriority: Should the caller provide
   // it?
   return std::make_unique<content::FileURLLoaderFactory>(

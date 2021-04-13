@@ -13,6 +13,7 @@
 #include "mojo/public/cpp/bindings/pending_remote.h"
 #include "mojo/public/cpp/system/filtered_data_source.h"
 #include "net/http/http_response_headers.h"
+#include "services/network/cors/cors_url_loader_factory.h"
 #include "services/network/public/mojom/url_loader.mojom.h"
 
 namespace network {
@@ -71,7 +72,8 @@ CONTENT_EXPORT void CreateFileURLLoaderBypassingSecurityChecks(
 CONTENT_EXPORT std::unique_ptr<network::mojom::URLLoaderFactory>
 CreateFileURLLoaderFactory(
     const base::FilePath& profile_path,
-    scoped_refptr<SharedCorsOriginAccessList> shared_cors_origin_access_list);
+    scoped_refptr<SharedCorsOriginAccessList> shared_cors_origin_access_list,
+    uint32_t process_id = network::mojom::kInvalidProcessId);
 
 }  // namespace content
 
