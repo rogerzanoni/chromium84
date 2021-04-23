@@ -429,15 +429,11 @@ bool PathProvider(int key, base::FilePath* result) {
 #else
       // If we're not bundled on mac or Android, resources.pak should be next
       // to the binary (e.g., for unit tests).
-#if defined(USE_CBE)
       if (!base::PathService::Get(base::DIR_EXE, &cur))
         return false;
-#endif  // defined(USE_CBE)
-      if (!base::PathService::Get(base::DIR_MODULE, &cur))
-        return false;
       cur = cur.Append(FILE_PATH_LITERAL("resources.pak"));
-#endif
       break;
+#endif
 
 #if defined(OS_CHROMEOS)
     case chrome::DIR_CHROMEOS_WALLPAPERS:
