@@ -97,4 +97,8 @@ const char kUIDisablePartialSwap[] = "ui-disable-partial-swap";
 // Enables the ozone x11 clipboard for linux-chromeos.
 const char kUseSystemClipboard[] = "use-system-clipboard";
 
+// Sets the agl app id when running chromium instead of a
+// webapp
+const char kAglAppId[] = "agl-appid";
+
 }  // namespace switches

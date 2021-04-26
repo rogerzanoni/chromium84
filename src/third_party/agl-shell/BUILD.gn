@@ -5,7 +5,9 @@ config("agl_shell_protocol_config") {
 source_set("agl_shell_protocol") {
   sources = [
     "include/protocol/agl-shell-client-protocol.h",
+    "include/protocol/agl-shell-desktop-client-protocol.h",
     "protocol/agl-shell-protocol.c",
+    "protocol/agl-shell-desktop-protocol.c",
   ]
 
   deps = [

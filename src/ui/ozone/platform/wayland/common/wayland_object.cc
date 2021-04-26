@@ -65,6 +65,9 @@ void (*ObjectTraits<gtk_primary_selection_device_manager>::deleter)(
 const wl_interface* ObjectTraits<agl_shell>::interface = &agl_shell_interface;
 void (*ObjectTraits<agl_shell>::deleter)(agl_shell*) = &agl_shell_destroy;
 
+const wl_interface* ObjectTraits<agl_shell_desktop>::interface = &agl_shell_desktop_interface;
+void (*ObjectTraits<agl_shell_desktop>::deleter)(agl_shell_desktop*) = &agl_shell_desktop_destroy;
+
 const wl_interface* ObjectTraits<gtk_primary_selection_device>::interface =
     &gtk_primary_selection_device_interface;
 void (*ObjectTraits<gtk_primary_selection_device>::deleter)(

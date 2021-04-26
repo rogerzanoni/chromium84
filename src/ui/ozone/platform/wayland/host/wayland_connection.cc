@@ -5,6 +5,7 @@
 #include "ui/ozone/platform/wayland/host/wayland_connection.h"
 
 #include <agl-shell-client-protocol.h>
+#include <agl-shell-desktop-client-protocol.h>
 #include <xdg-shell-client-protocol.h>
 #include <xdg-shell-unstable-v6-client-protocol.h>
 
@@ -13,12 +14,14 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop_current.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/cpp/system/platform_handle.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 #include "ui/gfx/swap_result.h"
 #include "ui/ozone/platform/wayland/common/wayland_object.h"
@@ -294,6 +297,17 @@ void WaylandConnection::Global(void* data,
 
   WaylandConnection* connection = static_cast<WaylandConnection*>(data);
 
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+
+  // kAglAppId is used only for setting the app_id when launching chrome
+  // webapps get their app_id from the config files
+  bool is_webapp = !command_line->HasSwitch(switches::kAglAppId);
+
+  static const struct agl_shell_desktop_listener agl_shell_desktop_listener = {
+    AglDesktopAppIdEvent,
+    AglDesktopAppStateEvent,
+  };
+
   ///@name USE_NEVA_APPRUNTIME
   ///@{
   if (connection->extension_->Bind(registry, name, interface, version)) {
@@ -418,15 +432,26 @@ void WaylandConnection::Global(void* data,
              (strcmp(interface, "wp_presentation") == 0)) {
     connection->presentation_ =
         wl::Bind<wp_presentation>(registry, name, kMaxWpPresentationVersion);
-  } else if (!connection->agl_shell_ && (strcmp(interface, "agl_shell") == 0)) {
-	LOG(INFO) << "Found agl_shell extension";
-	connection->agl_shell_ = wl::Bind<agl_shell>(registry, name, 1);
+  } else if (is_webapp && !connection->agl_shell_ && (strcmp(interface, "agl_shell") == 0)) {
+    LOG(INFO) << "Found agl_shell extension";
+    connection->agl_shell_ = wl::Bind<agl_shell>(registry, name, 1);
 
-	if (!connection->agl_shell_) {
-		LOG(ERROR) << "Failed to bind to agl_shell global";
-		return;
-	}
-	connection->agl_shell_manager = new AglShell(connection);
+    if (!connection->agl_shell_) {
+        LOG(ERROR) << "Failed to bind to agl_shell global";
+        return;
+    }
+    connection->agl_shell_manager = new AglShell(connection);
+  } else if (!is_webapp && !connection->agl_shell_desktop_ && (strcmp(interface, "agl_shell_desktop") == 0)) {
+    LOG(INFO) << "Found agl_shell_desktop extension";
+    connection->agl_shell_desktop_ = wl::Bind<agl_shell_desktop>(registry, name, 1);
+
+    if (!connection->agl_shell_desktop_) {
+        LOG(ERROR) << "Failed to bind to agl_shell_desktop global";
+        return;
+    }
+
+    agl_shell_desktop_add_listener(connection->agl_shell_desktop_.get(),
+                                   &agl_shell_desktop_listener, connection);
   } else if (!connection->text_input_manager_v1_ &&
              strcmp(interface, "zwp_text_input_manager_v1") == 0) {
     connection->text_input_manager_v1_ = wl::Bind<zwp_text_input_manager_v1>(
@@ -491,6 +516,21 @@ void WaylandConnection::Ping(void* data, xdg_wm_base* shell, uint32_t serial) {
   WaylandConnection* connection = static_cast<WaylandConnection*>(data);
   xdg_wm_base_pong(shell, serial);
   connection->ScheduleFlush();
+}
+
+// static
+void WaylandConnection::AglDesktopAppIdEvent(void *data, struct agl_shell_desktop *agl_shell_desktop,
+                          const char *app_id)
+{
+    LOG(INFO) << "agl_shell_desktop appid event, app_id: " << app_id;
+}
+
+// static
+void WaylandConnection::AglDesktopAppStateEvent(void *data, struct agl_shell_desktop *agl_shell_desktop,
+                             const char *app_id, const char *app_data,
+                             uint32_t app_state, uint32_t app_role)
+{
+    LOG(INFO) << "agl_shell_desktop appstate event, app_id: " << app_id << " state: " << app_state;
 }
 
 }  // namespace ui
