@@ -9,11 +9,7 @@
 #include <memory>
 
 #include "base/bind.h"
-#include "base/command_line.h"
-#include "base/strings/string16.h"
-#include "base/strings/utf_string_conversions.h"
 #include "ui/base/cursor/ozone/bitmap_cursor_factory_ozone.h"
-#include "ui/base/ui_base_switches.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
 #include "ui/events/ozone/events_ozone.h"
@@ -610,13 +606,6 @@ bool WaylandWindow::Initialize(PlatformWindowInitProperties properties) {
   UpdateBufferScale(false);
 
   MaybeUpdateOpaqueRegion();
-
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kAglAppId)) {
-      auto app_id = command_line->GetSwitchValueASCII(switches::kAglAppId);
-      SetAppId(base::UTF8ToUTF16(app_id));
-      LOG(INFO) << "App id: " << app_id;
-  }
 
   return true;
 }

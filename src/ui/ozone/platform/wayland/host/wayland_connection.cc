@@ -18,6 +18,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop_current.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/cpp/system/platform_handle.h"
@@ -69,7 +70,10 @@ constexpr uint32_t kMinWlOutputVersion = 2;
 
 WaylandConnection::WaylandConnection() = default;
 
-WaylandConnection::~WaylandConnection() = default;
+WaylandConnection::~WaylandConnection() {
+  delete agl_shell_manager;
+  delete agl_shell_desktop_manager;
+}
 
 bool WaylandConnection::Initialize() {
   static const wl_registry_listener registry_listener = {
@@ -452,6 +456,19 @@ void WaylandConnection::Global(void* data,
 
     agl_shell_desktop_add_listener(connection->agl_shell_desktop_.get(),
                                    &agl_shell_desktop_listener, connection);
+
+    std::string app_id = command_line->GetSwitchValueASCII(switches::kAglAppId);
+    int port = 0;
+    if (command_line->HasSwitch(switches::kLibhomescreenPort)) {
+      if (!base::StringToInt(command_line->GetSwitchValueASCII(switches::kLibhomescreenPort), &port)) {
+          LOG(ERROR) << "Invalid libhomescreen port.";
+          return;
+      }
+    } else {
+      LOG(ERROR) << "No libhomescreen port provided.";
+      return;
+    }
+    connection->agl_shell_desktop_manager = new AglShellDesktop(connection, app_id, port);
   } else if (!connection->text_input_manager_v1_ &&
              strcmp(interface, "zwp_text_input_manager_v1") == 0) {
     connection->text_input_manager_v1_ = wl::Bind<zwp_text_input_manager_v1>(

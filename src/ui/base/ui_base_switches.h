@@ -45,6 +45,8 @@ UI_BASE_EXPORT extern const char kMangleLocalizedStrings[];
 
 UI_BASE_EXPORT extern const char kAglAppId[];
 
+UI_BASE_EXPORT extern const char kLibhomescreenPort[];
+
 }  // namespace switches
 
 #endif  // UI_BASE_UI_BASE_SWITCHES_H_

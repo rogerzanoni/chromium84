@@ -1,0 +1,5 @@
+import("//build/config/linux/pkg_config.gni")
+
+pkg_config("libhomescreen") {
+  packages = [ "libhomescreen" ]
+}

@@ -25,6 +25,7 @@
 #include "ui/ozone/platform/wayland/host/wayland_data_source.h"
 #include "ui/ozone/platform/wayland/host/wayland_window_manager.h"
 #include "ui/ozone/platform/wayland/agl_shell_wrapper.h"
+#include "ui/ozone/platform/wayland/agl_shell_desktop_wrapper.h"
 
 #if defined(USE_NEVA_APPRUNTIME)
 #include "ui/ozone/platform/wayland/host/wayland_seat.h"
@@ -70,6 +71,7 @@ class WaylandConnection {
   zxdg_shell_v6* shell_v6() const { return shell_v6_.get(); }
   ivi_application* ivi_shell() const { return ivi_application_; }
   agl_shell *ashell() const { return agl_shell_.get(); }
+  agl_shell_desktop *ashell_desktop() const { return agl_shell_desktop_.get(); }
 #if !defined(USE_NEVA_APPRUNTIME)
   wl_seat* seat() const { return seat_.get(); }
 #endif  // !defined(USE_NEVA_APPRUNTIME)
@@ -147,6 +149,7 @@ class WaylandConnection {
   WaylandClipboard* clipboard() const { return clipboard_.get(); }
 
   ui::AglShell *agl_shell_manager;
+  ui::AglShellDesktop *agl_shell_desktop_manager;
 
   WaylandDataSource* drag_data_source() const {
     return dragdrop_data_source_.get();

@@ -125,6 +125,8 @@ source_set("wayland") {
     "ivi_surface_wrapper.h",
     "agl_shell_wrapper.cc",
     "agl_shell_wrapper.h",
+    "agl_shell_desktop_wrapper.cc",
+    "agl_shell_desktop_wrapper.h",
     "host/zwp_text_input_wrapper.h",
     "host/zwp_text_input_wrapper_v1.cc",
     "host/zwp_text_input_wrapper_v1.h",
@@ -259,6 +261,7 @@ source_set("wayland") {
 
   configs += [
     ":wayland-egl",
+    "//build/config/linux/libhomescreen",
     "//third_party/khronos:khronos_headers",
   ]
 }
